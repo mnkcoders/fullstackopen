@@ -1,3 +1,6 @@
+import { useState } from 'react';
+
+
 const Header = ( props ) => {
   return (
       <h1>{props.course}</h1>
@@ -12,17 +15,23 @@ const Part = ( props ) => {
   );
 };
 
-const Content = (props) => {
-  
-  return (<div>{props.parts.map( part => <Part name={part.name} exercises={part.exercises} />)}</div>);
+const Content = (props) => {  
+  return (<div>{props.parts.map( (part , idx ) => <Part key={idx} name={part.name} exercises={part.exercises} />)}</div>);
 };
 
 const Total = (props) => {
-  //console.log(props);
-  return( <p>Number of exercises: {props.exercises}</p>);
+  const total = props.exercises.map( part => part.exercises ).reduce( (a,b) => a+b , 0 );
+  
+  return( <p>Number of exercises: {total}</p>);
 };
 
 const App = () => {
+
+  const [test1 , counter ] = useState(0);
+
+  console.log( useState(0) );
+
+
   const course = 'Half Stack application development'
   const parts = [
     {
@@ -43,9 +52,11 @@ const App = () => {
     <div>
       <Header course={course} />
       <Content parts={parts} />
-      <Total exercises={parts[0].exercises + parts[1].exercises + parts[2].exercises} />
+      <Total exercises={parts} />
     </div>
   )
 };
 
 export default App;
+
+
