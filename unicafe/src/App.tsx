@@ -5,22 +5,29 @@ import { useState } from 'react'
  * @returns Statistics
  */
 const Statistics = ( {good,bad,neutral} ) => {
-
   if( good+bad+neutral > 0 ){
     const all = good+bad+neutral; 
     const positive = good / all * 100;
     const average = all / 3;
-    return (<div className="statistics">
-      <p>good: {good}</p>
-      <p>bad: {bad}</p>
-      <p>neutral: {neutral}</p>
-      <p>all: {all}</p>
-      <p>average: {average.toFixed(2)}</p>
-      <p>positive: {positive.toFixed(2)}%</p>
-    </div>)
+    return (<table className="statistics"><tbody>
+      <StatisticLine text="good" value={good} />
+      <StatisticLine text="bad" value={bad} />
+      <StatisticLine text="neutral" value={neutral} />
+      <StatisticLine text="all" value={all} />
+      <StatisticLine text="average" value={average.toFixed(2)} />
+      <StatisticLine text="positive" value={positive.toFixed(2).toString() + '%'} />
+    </tbody></table>)
   }
-  return (<div className="statistics">No feedback given</div>)
+  return (<table className="statistics"><tbody><tr><td>No feedback given</td></tr></tbody></table>)
 }
+/**
+ * 
+ * @param props 
+ * @returns HTML
+ */
+const StatisticLine = ( props ) => {
+  return (<tr><td>{props.text}:</td><th>{props.value}</th></tr>);
+};
 /**
  * 
  * @param Object props 
